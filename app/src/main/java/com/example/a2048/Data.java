@@ -58,6 +58,7 @@ public class Data implements Serializable {
         return this.hraSize;
     }
 
+
     void vytvorPoleHry(){
         int gameSize = hraSize;
         Hra = new int [gameSize][gameSize];

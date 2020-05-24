@@ -18,13 +18,11 @@ public class MainActivity extends AppCompatActivity {
     private Data dt = new Data();
     private Subor sb = new Subor(dt);
 
-    //TODO: Nacitaj Databazu
     private void Nacitanie(){
-
-        //Nacitaj hru z databazy
+        sb.loadData();
+        sb.loadGame(dt.getType());
     }
 
-    //TODO Oprav
     private void Zmen(){
 
         switch (dt.getJazyk()){
@@ -43,49 +41,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //TODO Uprav
     private View.OnClickListener closeOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             finish();
-            //Treba ulozit progres
+            sb.saveSettings();
             System.exit(0);
         }
     };
 
-    //TODO Uprav
     private View.OnClickListener settingsOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //Otvor nastavenia
             settingActivity();
-            //Vykonaj zmeny
+            sb.saveSettings();
+            Nacitanie();
         }
     };
 
-    //TODO Uprav
+
     private View.OnClickListener newGameOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            int Druh=dt.getType();
-            for (int i = 0; i < Druh; i++) {
-                for (int j = 0; j < Druh; j++) {
-                    //Vytvorenie hry
-                    dt.setPrvokPola(0, i, j);
-                }
-            }
-            //Uloz novu hru
-            //Otvor konkretnu hru
-            openGame(Druh);
+            dt.setExituje(false);
+            openGame(dt.getType());
         }
     };
 
-    //TODO Uprav
     private View.OnClickListener loadGameOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             int Druh = 2;
-            //Nacitaj hru
             if(dt.getExistuje()){
                 openGame(Druh);
             }else{
@@ -109,9 +95,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //TODO: otvaranie hry
     private void openGame(int Druh){
-        //setContentView(R.layout.game_activity);
         Intent intent =new Intent(MainActivity.this,Game.class);
         startActivity(intent);
     }

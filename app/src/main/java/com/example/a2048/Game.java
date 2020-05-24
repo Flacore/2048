@@ -20,9 +20,10 @@ import java.*;
 public class Game extends AppCompatActivity implements SwipeInterface{
     private Button newGame,endGame;
     private Data dt;
+    private Subor sb;
     private gameLogic gl;
     private int hraSize=0;
-    private TextView score,best;
+    private TextView score,best,cScore,cBest;
     private TextView[][] gameFieldTest;
 
 
@@ -50,14 +51,26 @@ public class Game extends AppCompatActivity implements SwipeInterface{
                 gameFieldTest[i][j].setLayoutParams(tmp);
                 gameFieldTest[i][j].setText("val!");
                 gameFieldTest[i][j].setBackgroundColor(Color.parseColor("#e5d3c7"));
-                //TODO: SetUniform
                 gameFieldTest[i][j].setGravity(Gravity.CENTER);
                 Layout_.addView(gameFieldTest[i][j]);
 
             }
         }
-
+        if(!dt.getExistuje())
+            vytvorNovu();
         upravZobrazovaciuPlochu();
+    }
+
+    public void vytvorNovu(){
+        int size_ = dt.getType();
+        for(int i = 0 ; i<size_ ; i++){
+            for(int j = 0 ; j<size_ ; j++){
+                dt.setPrvokPola(0,i,j);
+                gl.pridajPrvok();
+                gl.pridajPrvok();
+            }
+        }
+        dt.setScore(0);
     }
 
     public void upravZobrazovaciuPlochu(){
@@ -84,12 +97,29 @@ public class Game extends AppCompatActivity implements SwipeInterface{
         if(gl.swictcher(tmp))
             gl.doSmer(tmp);
         this.upravZobrazovaciuPlochu();
+        sb.saveGame();
         if(gl.testKoniecHry())
             ukonc();
 
+
     }
 
-    //TODO: Preklad
+    void Zmen(){
+        switch (dt.getJazyk()){
+            case 1:
+                cScore.setText("Score");
+                cBest.setText("Best");
+                newGame.setText("New Game");
+                endGame.setText("End Game");
+                break;
+            case 2:
+                cScore.setText("Skóre");
+                cBest.setText("Najlepšie");
+                newGame.setText("Nová Hra");
+                endGame.setText("Ukonč Hru");
+                break;
+        }
+    }
 
 
     @Override
@@ -130,15 +160,7 @@ public class Game extends AppCompatActivity implements SwipeInterface{
     private View.OnClickListener newGameListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            int size_ = dt.getType();
-            for(int i = 0 ; i<size_ ; i++){
-                for(int j = 0 ; j<size_ ; j++){
-                    dt.setPrvokPola(0,i,j);
-                    gl.pridajPrvok();
-                    gl.pridajPrvok();
-                }
-            }
-            dt.setScore(0);
+            vytvorNovu();
             upravZobrazovaciuPlochu();
         }
     };
@@ -175,6 +197,8 @@ public class Game extends AppCompatActivity implements SwipeInterface{
 
         score = (TextView) findViewById(R.id.valueScore);
         best = (TextView) findViewById(R.id.bestScore);
+        score = (TextView) findViewById(R.id.constScore);
+        best = (TextView) findViewById(R.id.constBest);
 
         newGame = (Button) findViewById(R.id.bGame_NEW);
         endGame = (Button) findViewById(R.id.bGame_END);

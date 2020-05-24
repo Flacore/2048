@@ -35,4 +35,9 @@ public class Subor {
     public void saveGame(){
 
     }
+
+    //TODO:VymazanieUlozenehHry
+    public void deleteGame(){
+
+    }
 }

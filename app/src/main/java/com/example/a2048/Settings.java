@@ -7,65 +7,65 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.w3c.dom.Text;
 
 public class Settings extends AppCompatActivity {
    private Data dt;
+   private RadioGroup rGroup;
+   private RadioButton rButton;
+   private Button SVK,ENG,Back;
+   private TextView LANG,GAME;
 
-    private Button SVK,ENG,Back;
-    private Text LANG,GAME;
-
-    //TODO: zmen jazyk nastaveni
     void Zmen(){
         switch (dt.getJazyk()){
             case 1:
                 SVK.setText("Slovak");
                 ENG.setText("English");
                 Back.setText("Back");
-                //LANG.setTextContent("Language");
-                //GAME.setTextContent("game size");
+                LANG.setText("Language");
+                GAME.setText("game size");
                 break;
             case 2:
                 SVK.setText("Slovensky");
                 ENG.setText("Anglicky");
                 Back.setText("Späť");
-                //LANG.setTextContent("Jazyk");
-                //GAME.setTextContent("Velkosť hry");
+                LANG.setText("Jazyk");
+                GAME.setText("Velkosť hry");
                 break;
         }
     }
 
 
-    //TODO: zmena jazyku na slovencinu
     private View.OnClickListener svkOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //dt.setJazyk(2);
-            //Zmen();
+            dt.setJazyk(2);
+            Zmen();
         }};
 
-    //TODO: zmena jazyku na anglictinu
     private View.OnClickListener engOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //dt.setJazyk(1);
-            //Zmen();
+            dt.setJazyk(1);
+            Zmen();
         }};
 
     //TODO: navrat do hlavneho menu
     private  View.OnClickListener backListener = new View.OnClickListener(){
         @Override
         public void onClick(View v){
-            //Close activity
-            //Save to Data...
+            finish();
         }
     };
 
-    //Zrusenie navratu
     @Override
     public void onBackPressed() { }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +76,8 @@ public class Settings extends AppCompatActivity {
         ENG = (Button) findViewById(R.id.EnglishButton) ;
         Back = (Button) findViewById(R.id.BackButton_Settings) ;
 
-        //LANG = (Text) findViewById(R.id.LanguageText);
-        //GAME = (Text) findViewById(R.id.GameSizeText);
-
+        LANG = (TextView) findViewById(R.id.LanguageText);
+        GAME = (TextView) findViewById(R.id.GameSizeText);
 
         Intent intent = getIntent();
 
@@ -91,7 +90,22 @@ public class Settings extends AppCompatActivity {
         SVK.setOnClickListener(svkOnClickListener);
         ENG.setOnClickListener(engOnClickListener);
 
-        //TODO: ziskaj hodnotu hry a uloz ju
-        //Radio button
+        rGroup = findViewById(R.id.SizeGroup);
+        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.radioButton2x2:
+                        dt.setType(2);
+                        break;
+                    case R.id.radioButton3x3:
+                        dt.setType(3);
+                        break;
+                    case R.id.radioButton4x4:
+                        dt.setType(4);
+                        break;
+                }
+            }
+        });
     }
 }
