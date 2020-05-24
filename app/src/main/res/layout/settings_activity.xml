@@ -1,115 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.percent.PercentRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f7f1e3">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="370dp"
-        android:layout_height="370dp"
-        android:layout_marginStart="450dp"
-        android:layout_marginLeft="450dp"
-        android:layout_marginEnd="450dp"
-        android:layout_marginRight="450dp"
-        android:layout_marginBottom="10dp"
+    <android.support.percent.PercentRelativeLayout
+        app:layout_widthPercent="96%"
+        app:layout_heightPercent="96%"
+        app:layout_marginTopPercent="2%"
+        app:layout_marginLeftPercent="2%"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/GameSizeText"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="GAME SIZE:"
-            android:textSize="24sp"
-            android:textColor="#a88d61"/>
+        <android.support.percent.PercentRelativeLayout
+            app:layout_widthPercent="100%"
+            app:layout_heightPercent="90%"
+            app:layout_marginTopPercent="10%"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/textBlank3"
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <RadioGroup
-            android:id="@+id/SizeGroup"
-            android:layout_width="match_parent"
-            android:layout_height="120dp">
-
-            <RadioButton
-                android:id="@+id/radioButton2x2"
+            <TextView
+                android:id="@+id/GameSizeText"
+                android:autoSizeTextType="uniform"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:checked="true"
-                android:text="2 x 2" />
+                app:layout_heightPercent="12.5%"
+                android:text="GAME SIZE:"
+                android:textSize="24sp"
+                app:layout_marginTopPercent="0%"
+                android:textColor="#a88d61"/>
 
-            <RadioButton
-                android:id="@+id/radioButton3x3"
+            <RadioGroup
+                android:id="@+id/SizeGroup"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="3 x 3" />
+                app:layout_heightPercent="37.5%"
+                app:layout_marginTopPercent="15.6%">
 
-            <RadioButton
-                android:id="@+id/radioButton4x4"
+                <RadioButton
+                    android:id="@+id/radioButton2x2"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="2 x 2" />
+
+                <RadioButton
+                    android:id="@+id/radioButton3x3"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="3 x 3" />
+
+                <RadioButton
+                    android:id="@+id/radioButton4x4"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:text="4 x 4" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/LanguageText"
+                android:autoSizeTextType="uniform"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="4 x 4" />
+                app:layout_heightPercent="12.5%"
+                app:layout_marginTopPercent="56.2%"
+                android:text="LANGUAGE:"
+                android:textSize="24sp"
+                android:textColor="#a88d61"/>
 
-        </RadioGroup>
+            <Button
+                android:id="@+id/SlovakButton"
+                android:layout_width="match_parent"
+                app:layout_heightPercent="12.5%"
+                app:layout_marginTopPercent="71.8%"
+                android:background="#a88d61"
+                android:text="Slovak"
+                android:textColor="#ffffff"/>
 
-        <TextView
-            android:id="@+id/textBlank2"
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            <Button
+                android:id="@+id/EnglishButton"
+                android:layout_width="match_parent"
+                app:layout_heightPercent="12.5%"
+                app:layout_marginTopPercent="85%"
+                android:background="#a88d61"
+                android:text="English"
+                android:textColor="#ffffff" />
 
-        <TextView
-            android:id="@+id/LanguageText"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="LANGUAGE:"
-            android:textSize="24sp"
-            android:textColor="#a88d61"/>
-
-        <TextView
-            android:id="@+id/textBlank4"
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+        </android.support.percent.PercentRelativeLayout>
 
         <Button
-            android:id="@+id/SlovakButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:id="@+id/BackButton_Settings"
+            app:layout_widthPercent="20%"
+            app:layout_heightPercent="8%"
+            app:layout_marginLeftPercent="80%"
+            app:layout_marginTopPercent="0%"
             android:background="#a88d61"
-            android:text="Slovak"
-            android:textColor="#ffffff"/>
-
-        <TextView
-            android:id="@+id/textBlank"
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <Button
-            android:id="@+id/EnglishButton"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#a88d61"
-            android:text="English"
-            android:textColor="#ffffff" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/BackButton_Settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginRight="21dp"
-        android:background="#a88d61"
-        android:text="BACK"
-        android:textColor="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+            android:text="BACK"
+            android:textColor="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.percent.PercentRelativeLayout>
+</android.support.percent.PercentRelativeLayout>

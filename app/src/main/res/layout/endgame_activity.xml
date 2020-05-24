@@ -7,83 +7,77 @@
     android:background="#f7f1e3"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="360dp"
-        android:layout_height="340dp"
-        android:layout_marginStart="1000dp"
-        android:layout_marginLeft="1000dp"
-        android:layout_marginTop="1000dp"
-        android:layout_marginEnd="1000dp"
-        android:layout_marginRight="1000dp"
-        android:layout_marginBottom="1000dp"
+    <android.support.percent.PercentRelativeLayout
         android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:autoSizeTextType="uniform"
             android:id="@+id/HighScoreText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            app:layout_widthPercent="96%"
+            app:layout_marginLeftPercent="2%"
+            app:layout_heightPercent="15%"
+            app:layout_marginTopPercent="2%"
             android:text="NEW HIGH SCORE"
             android:textSize="36sp"
             android:textColor="#a88d61"/>
 
         <TextView
+            android:autoSizeTextType="uniform"
             android:id="@+id/ScoreText"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
+            app:layout_widthPercent="96%"
+            app:layout_marginLeftPercent="2%"
+            app:layout_heightPercent="15%"
+            app:layout_marginTopPercent="17%"
             android:text="Your score is:"
             android:textSize="24sp"
             android:textColor="#000000"/>
 
         <TextView
+            android:autoSizeTextType="uniform"
             android:id="@+id/ScoreValueText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            app:layout_widthPercent="96%"
+            app:layout_marginLeftPercent="2%"
+            app:layout_heightPercent="15%"
+            app:layout_marginTopPercent="32%"
             android:text="123456789"
             android:textSize="26sp"
             android:textColor="#000000"
             />
 
-        <TextView
-            android:id="@+id/textBlank6"
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
-
         <Button
             android:id="@+id/NewGameButton_EndGame"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            app:layout_widthPercent="96%"
+            app:layout_marginLeftPercent="2%"
+            app:layout_heightPercent="15%"
+            app:layout_marginTopPercent="49%"
             android:text="New Game"
             android:background="#a88d61"
             android:textColor="#ffffff"/>
 
-        <TextView
-            android:id="@+id/textBlank5"
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
         <Button
             android:id="@+id/MainMenuButton_EndGame"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            app:layout_widthPercent="96%"
+            app:layout_marginLeftPercent="2%"
+            app:layout_heightPercent="15%"
+            app:layout_marginTopPercent="66%"
             android:text="Main menu"
             android:background="#a88d61"
             android:textColor="#ffffff"/>
 
-        <TextView
-            android:id="@+id/textBlank7"
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
         <Button
             android:id="@+id/EndButton_EndGame"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            app:layout_widthPercent="96%"
+            app:layout_marginLeftPercent="2%"
+            app:layout_heightPercent="15%"
+            app:layout_marginTopPercent="83%"
             android:text="End"
             android:background="#a88d61"
             android:textColor="#ffffff"/>
-    </LinearLayout>
+    </android.support.percent.PercentRelativeLayout>
 </android.support.constraint.ConstraintLayout>

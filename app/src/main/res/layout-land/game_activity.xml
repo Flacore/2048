@@ -9,8 +9,8 @@
     android:background="#f7f1e3">
 
     <android.support.percent.PercentRelativeLayout
-       app:layout_widthPercent="100%"
-        app:layout_heightPercent="50%"
+       app:layout_widthPercent="50%"
+        app:layout_heightPercent="100%"
         >
 
         <android.support.percent.PercentRelativeLayout
@@ -121,9 +121,9 @@
 
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/gameField"
-        app:layout_widthPercent="100%"
-        app:layout_heightPercent="50%"
-        app:layout_marginTopPercent="50%"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="100%"
+        app:layout_marginLeftPercent="50%"
         android:background="#f51b00"
         >
         <LinearLayout
@@ -131,8 +131,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-            //Sem pridavat riadky
-            //@Predstavuje herne pole
+        //Sem pridavat riadky
+        //@Predstavuje herne pole
         </LinearLayout>
     </android.support.percent.PercentRelativeLayout>
 

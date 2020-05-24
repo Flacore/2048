@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f7f1e3"
-    android:configChanges="orientation|screenSize|keyboardHidden"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
 
-    <LinearLayout
+    <android.support.percent.PercentRelativeLayout
         android:id="@+id/linearLayout"
-        android:layout_width="310dp"
-        android:layout_height="230dp"
-        android:layout_marginStart="214dp"
-        android:layout_marginLeft="214dp"
-        android:layout_marginEnd="214dp"
-        android:layout_marginRight="214dp"
-        android:layout_marginBottom="40dp"
-        android:background="#f7f1e3"
+        app:layout_widthPercent="100%"
+        app:layout_heightPercent="50%"
+        app:layout_marginTopPercent="50%"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,58 +18,65 @@
 
         <Button
             android:id="@+id/newGame"
-            android:layout_width="310dp"
+            app:layout_widthPercent="80%"
+            app:layout_heightPercent="20%"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            app:layout_marginTopPercent="0%"
+            app:layout_marginLeftPercent="10%"
             android:background="#a88d61"
             android:text="NEW GAME"
             android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/loadGame"
-            android:layout_width="310dp"
+            app:layout_widthPercent="80%"
+            app:layout_heightPercent="20%"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            app:layout_marginTopPercent="25%"
+            app:layout_marginLeftPercent="10%"
             android:background="#a88d61"
             android:text="LOAD GAME"
             android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/settings"
-            android:layout_width="310dp"
+            app:layout_widthPercent="80%"
+            app:layout_heightPercent="20%"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            app:layout_marginTopPercent="50%"
+            app:layout_marginLeftPercent="10%"
             android:background="#a88d61"
             android:text="SETTINGS"
             android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/close"
-            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:background="#a88d61"
             android:text="Close"
-            android:textColor="#ffffff" />
-    </LinearLayout>
+            android:textColor="#ffffff"
+            app:layout_marginTopPercent="75%"
+            app:layout_marginLeftPercent="10%"
+            app:layout_heightPercent="20%"
+            app:layout_widthPercent="80%" />
+    </android.support.percent.PercentRelativeLayout>
 
     <TextView
         android:id="@+id/gameName"
-        android:layout_width="303dp"
-        android:layout_height="116dp"
-        android:layout_marginStart="176dp"
-        android:layout_marginLeft="176dp"
-        android:layout_marginEnd="177dp"
-        android:layout_marginRight="177dp"
-        android:autoText="true"
+        app:layout_widthPercent="100%"
+        app:layout_heightPercent="50%"
+        app:layout_marginBottomPercent="50%"
         android:lineSpacingExtra="8sp"
         android:text="2048"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#f9c157"
-        android:textSize="100sp"
+        android:gravity="center"
+        android:layout_gravity='center_vertical'
+        android:autoSizeTextType="uniform"
         android:textStyle="italic"
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+</android.support.percent.PercentRelativeLayout>
