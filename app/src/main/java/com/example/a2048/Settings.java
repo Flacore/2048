@@ -17,6 +17,7 @@ public class Settings extends AppCompatActivity {
     private Button SVK,ENG,Back;
     private Text LANG,GAME;
 
+    //TODO: zmen jazyk nastaveni
     void Zmen(){
         switch (dt.getJazyk()){
             case 1:
@@ -37,6 +38,7 @@ public class Settings extends AppCompatActivity {
     }
 
 
+    //TODO: zmena jazyku na slovencinu
     private View.OnClickListener svkOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -44,6 +46,7 @@ public class Settings extends AppCompatActivity {
             //Zmen();
         }};
 
+    //TODO: zmena jazyku na anglictinu
     private View.OnClickListener engOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -51,6 +54,7 @@ public class Settings extends AppCompatActivity {
             //Zmen();
         }};
 
+    //TODO: navrat do hlavneho menu
     private  View.OnClickListener backListener = new View.OnClickListener(){
         @Override
         public void onClick(View v){
@@ -59,7 +63,7 @@ public class Settings extends AppCompatActivity {
         }
     };
 
-
+    //Zrusenie navratu
     @Override
     public void onBackPressed() { }
 
@@ -87,7 +91,7 @@ public class Settings extends AppCompatActivity {
         SVK.setOnClickListener(svkOnClickListener);
         ENG.setOnClickListener(engOnClickListener);
 
-
+        //TODO: ziskaj hodnotu hry a uloz ju
         //Radio button
     }
 }

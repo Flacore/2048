@@ -14,26 +14,25 @@ import android.widget.Toast;
 public class Game extends AppCompatActivity{
     private Button newGame,endGame;
     private Data dt;
-    //private int[][] Hra;
     private int hraSize=0;
 
+    //TODO: nastavenie hry
     public void setGame(){
-        //Urob co treba prri vytvarani hry
+        int size_ = dt.getType();
+        //Vytvor plochu
+        upravZobrazovaciuPlochu();
     }
-/*
-    public Game(Data tmp){
-        this.hraSize=tmp.getType();
-        this.Hra = new int[hraSize][hraSize];
-        for (int i=0;i<hraSize;i++){
-            for (int j =0; i<hraSize;j++){
-                Hra[i][j]=tmp.getHraProk(i,j);
-            }
-        }
+
+    //TODO: Uprav plochu
+    public void upravZobrazovaciuPlochu(){
+        int size_ = dt.getType();
+        //Napln vytvorenu plochu z data;
     }
- */
 
     //TODO: Swipovanie
+    //TODO: Naklananie hry
 
+    //TODO: Resetovanie hry
     private View.OnClickListener newGameListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -41,12 +40,17 @@ public class Game extends AppCompatActivity{
         }
     };
 
+    //TODO: ukoncenie hry predcasne
     private View.OnClickListener endGameListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             //Co treba pri end hre
         }
     };
+
+    //Zrusenie navratu
+    @Override
+    public void onBackPressed() { }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -22,7 +22,7 @@ public class Data implements Serializable {
         this.Score=tmp;
     }
 
-    int setScore(){
+    int getScore(){
         return this.Score;
     }
 

@@ -18,9 +18,10 @@ public class MainActivity extends AppCompatActivity {
     private Data dt = new Data();
     private Subor sb = new Subor(dt);
 
-    //Pozri sa na nacitavanie
+    //TODO: Nacitaj Databazu
     private void Nacitanie(){
-        sb.nacitajDefault();
+
+        //Nacitaj hru z databazy
     }
 
     //TODO Oprav
@@ -40,16 +41,6 @@ public class MainActivity extends AppCompatActivity {
                 loadGame.setText("Načítaj hru");
                 break;
         }
-
-        //Ak existuje subor na citanie zobraz tlacidlo nacitanie hry
-        if(dt.getExistuje()){
-            loadGame.setBackgroundColor(11046241);
-            loadGame.setTextColor(16777215);
-        }else{
-            loadGame.setBackgroundColor(10263708);
-            loadGame.setTextColor(0);
-        }
-
     }
 
     //TODO Uprav
@@ -57,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             finish();
+            //Treba ulozit progres
             System.exit(0);
         }
     };
@@ -65,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener settingsOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            //Otvor nastavenia
             settingActivity();
+            //Vykonaj zmeny
         }
     };
 
@@ -76,10 +70,13 @@ public class MainActivity extends AppCompatActivity {
             int Druh=dt.getType();
             for (int i = 0; i < Druh; i++) {
                 for (int j = 0; j < Druh; j++) {
+                    //Vytvorenie hry
                     dt.setPrvokPola(0, i, j);
                 }
             }
-            openGame();
+            //Uloz novu hru
+            //Otvor konkretnu hru
+            openGame(Druh);
         }
     };
 
@@ -87,8 +84,10 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener loadGameOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            int Druh = 2;
+            //Nacitaj hru
             if(dt.getExistuje()){
-                openGame();
+                openGame(Druh);
             }else{
                 switch (dt.getJazyk()){
                     case 1:
@@ -110,10 +109,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void openGame(){
+    //TODO: otvaranie hry
+    private void openGame(int Druh){
         //setContentView(R.layout.game_activity);
         Intent intent =new Intent(MainActivity.this,Game.class);
         startActivity(intent);
+    }
+    private void openGame(){
+        openGame(3);
     }
 
     @Override
