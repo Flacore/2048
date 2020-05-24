@@ -1,5 +1,15 @@
 package com.example.a2048;
 
+import android.app.ActionBar;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import android.support.v7.app.AppCompatActivity;
 
 //TODO: Zoznam co treba urobit
@@ -15,8 +25,18 @@ import android.support.v7.app.AppCompatActivity;
 public class EndGame extends AppCompatActivity {
     private Data dt;
 
+    //TODO: Preklad
+
     //Zrusenie navratu
     @Override
     public void onBackPressed() { }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.endgame_activity);
+
+        //Intent getIntent_ = getIntent();
+    }
 
 }

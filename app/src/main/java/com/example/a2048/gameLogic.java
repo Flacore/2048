@@ -9,8 +9,20 @@ public class gameLogic {
     private Data dt;
     private static int paScore = 0;
 
+    public void pridajPrvok(){
+        boolean paPravda=true;
+        do{
+            int paHelp1 = ((int)(dt.getType()-1));
+            int paHelp2 = ((int)(dt.getType()-1));
+            if(dt.getHraProk(paHelp1,paHelp2) == 0){
+                dt.setPrvokPola(2,paHelp1,paHelp2);
+                paPravda = false;
+            }
+        }while(paPravda);
+    }
+
     //Test na koniec hry
-    public boolean testKoniecHry(int paMatica [][]){
+    public boolean testKoniecHry(){
         for (int i = 0; i < dt.getType(); i++) {
             for (int j = 0; j < dt.getType(); j++) {
                 if(dt.getHraProk(i,j)==0){

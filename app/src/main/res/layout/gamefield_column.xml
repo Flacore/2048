@@ -7,15 +7,6 @@
 
         //Stlpec
 
-    <LinearLayout
-        android:id="@+id/riadok"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:background="#a88d61"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
-
         <TextView
             android:id="@+id/stlpec_riadku"
             android:layout_width="match_parent"
@@ -24,7 +15,7 @@
             android:autoSizeTextType="uniform"
             android:background="#e5d3c7"
             android:gravity="center"
-            android:text="val?" />
-    </LinearLayout>
+            android:text="val?"
+            app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
