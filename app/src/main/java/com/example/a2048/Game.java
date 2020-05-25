@@ -3,6 +3,10 @@ package com.example.a2048;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,17 +21,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.Color;
+import android.app.Service;
 import java.util.Random;
+import android.hardware.SensorEventListener;
 import java.*;
 
-public class Game extends AppCompatActivity implements GestureDetector.OnGestureListener {
+public class Game extends AppCompatActivity implements GestureDetector.OnGestureListener, SensorEventListener {
 
     private static final int SETTINGS_REQUEST_CODE=0;
+
+    private int zolik = 0;
+
+    private float acelVal, acelLast, shake;
+    private SensorManager sm;
 
     private Button newGame,endGame;
     private Data dt;
     private Subor sb;
-    private int hraSize=0;
     private TextView score,best,cScore,cBest;
     private TextView[][] gameFieldTest;
 
@@ -384,6 +394,12 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
 
         gestureDetector = new GestureDetector(this);
 
+        sm = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sm.registerListener(this,sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),SensorManager.SENSOR_DELAY_NORMAL);
+        acelVal = SensorManager.GRAVITY_EARTH;
+        acelLast = SensorManager.GRAVITY_EARTH;
+        shake = 0.00f ;
+
         Zmen();
         setGame();
     }
@@ -447,5 +463,31 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
 
         return result;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        float x = event.values[0];
+        float y = event.values[1];
+        float z = event.values[2];
+
+        acelLast = acelVal;
+        acelVal = (float) Math.sqrt((double)(x*x+y*y+z*z));
+        shake = shake * 0.9f + (acelVal - acelLast);
+
+        if(shake > 12){
+            zolik++;
+            if(zolik <=1) {
+                int tmp = dt.getScore();
+                vytvorNovu();
+                dt.setScore(tmp);
+                upravZobrazovaciuPlochu();
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }
