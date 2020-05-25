@@ -8,4 +8,38 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+
+    <style name="Button_Style" parent="ThemeOverlay.AppCompat">
+        <item name="android:textColor">@color/color2</item>
+        <item name="android:background">@color/color1</item>
+    </style>
+
+    <style name="TextGame_Style">
+        <item name="android:textColor">@color/color2</item>
+    </style>
+
+    <style name="TextScore_style">
+        <item name="android:textColor">@color/color3</item>
+    </style>
+
+    <style name="HighLighted_Text">
+        <item name="android:textColor">@color/color1</item>
+    </style>
+
+    <style name="Logo">
+        <item name="android:textColor">@color/color4</item>
+        <item name="android:background">@color/color5</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:typeface">normal</item>
+    </style>
+
+    <style name="BackgroudFilled">
+        <item name="android:background">@color/color1</item>
+    </style>
+
+    <style name="BackgroudBlank">
+        <item name="android:background">@color/color5</item>
+    </style>
+
 </resources>

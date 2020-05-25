@@ -7,7 +7,9 @@ import android.support.percent.PercentRelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
+import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +20,10 @@ import android.graphics.Color;
 import java.util.Random;
 import java.*;
 
-public class Game extends AppCompatActivity implements SwipeInterface {
+public class Game extends AppCompatActivity implements GestureDetector.OnGestureListener {
+
+    private static final int SETTINGS_REQUEST_CODE=0;
+
     private Button newGame,endGame;
     private Data dt;
     private Subor sb;
@@ -26,10 +31,24 @@ public class Game extends AppCompatActivity implements SwipeInterface {
     private TextView score,best,cScore,cBest;
     private TextView[][] gameFieldTest;
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("Data", dt);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        dt =(Data) savedInstanceState.getSerializable("Data");
+        upravZobrazovaciuPlochu();
+        Zmen();
+    }
 
     private Activity activity;
     static final int MIN_DISTANCE = 100;
     private float downX, downY, upX, upY;
+    private GestureDetector gestureDetector;
 
     public void pridajPrvok(){
         boolean paPravda=true;
@@ -103,7 +122,7 @@ public class Game extends AppCompatActivity implements SwipeInterface {
     private boolean smerPravaTest(){
         boolean moznPohyb = false;
         for (int i = 0; i < dt.getType(); i++) {
-            for (int j = dt.getType()-1; j >0; j--) {
+            for (int j = dt.getType()-1; j > 0; j--) {
                 if((dt.getHraProk(i,j) == dt.getHraProk(i,j-1) && dt.getHraProk(i,j)!=0) || (dt.getHraProk(i,j) ==0  && dt.getHraProk(i,j-1)>0)){
                     moznPohyb = true;
                 }
@@ -259,6 +278,7 @@ public class Game extends AppCompatActivity implements SwipeInterface {
         pridajPrvok();
         pridajPrvok();
         dt.setScore(0);
+        dt.setExituje(true);
     }
 
     public void upravZobrazovaciuPlochu(){
@@ -282,14 +302,14 @@ public class Game extends AppCompatActivity implements SwipeInterface {
     }
 
     public void vykonaj(int tmp){
-        if(swictcher(tmp))
+        if(swictcher(tmp)) {
             doSmer(tmp);
-        this.upravZobrazovaciuPlochu();
-        sb.saveGame();
-        if(testKoniecHry())
-            ukonc();
-
-
+            this.upravZobrazovaciuPlochu();
+            //TODO: sb.saveGame();
+            if (testKoniecHry())
+                ukonc();
+            pridajPrvok();
+        }
     }
 
     void Zmen(){
@@ -309,42 +329,6 @@ public class Game extends AppCompatActivity implements SwipeInterface {
         }
     }
 
-
-    @Override
-    public void left2right(View v) {
-        switch(v.getId()){
-            case R.id.game_layout:
-               vykonaj(6);
-                break;
-        }
-    }
-    @Override
-    public void right2left(View v) {
-        switch(v.getId()){
-            case R.id.game_layout:
-                vykonaj(4);
-                break;
-        }
-    }
-    @Override
-    public void bottom2top(View v) {
-        switch(v.getId()){
-            case R.id.game_layout:
-                vykonaj(8);
-                break;
-        }
-    }
-    @Override
-    public void top2bottom(View v) {
-        switch(v.getId()){
-            case R.id.game_layout:
-                vykonaj(2);
-                break;
-        }
-    }
-
-    //TODO: Naklananie hry
-
     private View.OnClickListener newGameListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -356,7 +340,16 @@ public class Game extends AppCompatActivity implements SwipeInterface {
     public void ukonc(){
             Intent intent =new Intent(Game.this,EndGame.class);
             intent.putExtra("Data", dt);
-            startActivity(intent);
+            startActivityForResult(intent,SETTINGS_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SETTINGS_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            dt =(Data) data.getExtras().getSerializable("Data");
+            vytvorNovu();
+            upravZobrazovaciuPlochu();
+        }
     }
 
     private View.OnClickListener endGameListener = new View.OnClickListener() {
@@ -378,10 +371,6 @@ public class Game extends AppCompatActivity implements SwipeInterface {
         Intent i = getIntent();
         dt = (Data) i.getSerializableExtra("Data");
 
-        ActivitySwipeDetector swipe = new ActivitySwipeDetector(this);
-       ////TODO: LinearLayout swipe_layout = (LinearLayout) findViewById(R.id.game_layout);
-        ////TODO: swipe_layout.setOnTouchListener(swipe);
-
         score = (TextView) findViewById(R.id.valueScore);
         best = (TextView) findViewById(R.id.valueBestScore);
         cScore = (TextView) findViewById(R.id.constScore);
@@ -393,7 +382,70 @@ public class Game extends AppCompatActivity implements SwipeInterface {
         newGame.setOnClickListener(newGameListener);
         endGame.setOnClickListener(endGameListener);
 
+        gestureDetector = new GestureDetector(this);
+
         Zmen();
         setGame();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent downEvent, MotionEvent moveEvent, float velocityX, float velocityY) {
+        boolean result =false;
+        float diffY = moveEvent.getY()-downEvent.getY();
+        float diffX = moveEvent.getX()-downEvent.getX();
+        if(Math.abs(diffX)>Math.abs(diffY)){
+            if(Math.abs(diffX)>300&& Math.abs(velocityX)>300)
+                if(diffX >0){
+                    //V pravo
+                    vykonaj(6);
+                }else{
+                    //Do lava
+                    vykonaj(4);
+                }
+            result = true;
+        }else{
+            if(Math.abs(diffY)>300&& Math.abs(velocityY)>300)
+                if(diffY >0){
+                    //Dole
+                    vykonaj(2);
+                }else{
+                    //Hore
+                    vykonaj(8);
+                }
+            result = true;
+        }
+
+        return result;
     }
 }

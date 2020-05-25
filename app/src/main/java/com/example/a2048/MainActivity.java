@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int SETTINGS_REQUEST_CODE=0;
+
     private Button close,settings,newGame,loadGame;
     private ActionBar actionBar;
 
@@ -21,6 +23,19 @@ public class MainActivity extends AppCompatActivity {
     private void Nacitanie(){
         sb.loadData();
         sb.loadGame(dt.getType());
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("Data", dt);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        dt =(Data) savedInstanceState.getSerializable("Data");
+        Zmen();
     }
 
     private void Zmen(){
@@ -90,7 +105,15 @@ public class MainActivity extends AppCompatActivity {
     private void settingActivity(){
         Intent intent = new Intent(MainActivity.this, Settings.class);
         intent.putExtra("Data", dt);
-        startActivity(intent);
+        startActivityForResult(intent,SETTINGS_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SETTINGS_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            dt =(Data) data.getExtras().getSerializable("Data");
+            Zmen();
+        }
     }
 
     private void openGame(int Druh){
@@ -109,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent i = getIntent();
+        if(i.getSerializableExtra("Data")!=null)
+            dt = (Data) i.getSerializableExtra("Data");
 
         close = (Button) findViewById(R.id.close) ;
         settings = (Button) findViewById(R.id.settings) ;

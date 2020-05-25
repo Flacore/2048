@@ -19,6 +19,19 @@ public class EndGame extends AppCompatActivity {
     private Button bNewGame,bMainMenu,bEndGame;
     private TextView tHighScore,tScoreValue,tScore;
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("Data", dt);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        dt =(Data) savedInstanceState.getSerializable("Data");
+        Zmen();
+    }
+
     //Zrusenie navratu
     @Override
     public void onBackPressed() { }
@@ -60,6 +73,16 @@ public class EndGame extends AppCompatActivity {
         if(tmp < dt.getScore()){
             Toast.makeText(EndGame.this,text1,Toast.LENGTH_SHORT).show();
             tHighScore.setVisibility(View.VISIBLE);
+            switch(dt.getType()){
+                case 2:
+                    dt.setHigh2x2(dt.getScore());
+                    break;
+                case 3:
+                    dt.setHigh3x3(dt.getScore());
+                    break;
+                default:
+                    dt.setHigh4x4(dt.getScore());
+            }
         }else{
             if(!(tmp == dt.getScore()))
                 Toast.makeText(EndGame.this,text2+tmp,Toast.LENGTH_SHORT).show();
@@ -71,6 +94,9 @@ public class EndGame extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             //TODO: sb.saveSettings();
+            Intent output = new Intent();
+            output.putExtra("Data", dt);
+            setResult(RESULT_OK, output);
             finish();
         }
     };
@@ -80,6 +106,7 @@ public class EndGame extends AppCompatActivity {
             //TODO: sb.saveSettings();
             Intent intent  = new Intent(EndGame.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("Data", dt);
             startActivity(intent);
         }
     };
@@ -100,6 +127,8 @@ public class EndGame extends AppCompatActivity {
         Intent i = getIntent();
         dt = (Data) i.getSerializableExtra("Data");
 
+        dt.setExituje(false);
+
         bNewGame = (Button) findViewById(R.id.NewGameButton_EndGame);
         bMainMenu = (Button) findViewById(R.id.MainMenuButton_EndGame);
         bEndGame = (Button) findViewById(R.id.EndButton_EndGame);
@@ -114,7 +143,6 @@ public class EndGame extends AppCompatActivity {
 
         //TODO: sb.deleteGame();
         Zmen();
-
     }
 
 }

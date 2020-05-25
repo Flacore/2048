@@ -8,6 +8,7 @@
     android:layout_height="match_parent">
 
     <android.support.percent.PercentRelativeLayout
+        style="@style/BackgroudBlank"
         android:orientation="vertical"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -18,66 +19,62 @@
 
         <TextView
             android:autoSizeTextType="uniform"
+            style="@style/HighLighted_Text"
             android:id="@+id/HighScoreText"
             app:layout_widthPercent="96%"
             app:layout_marginLeftPercent="2%"
             app:layout_heightPercent="15%"
             app:layout_marginTopPercent="2%"
             android:text="NEW HIGH SCORE"
-            android:textSize="36sp"
-            android:textColor="#a88d61"/>
+            android:textSize="36sp"/>
 
         <TextView
             android:autoSizeTextType="uniform"
+            style="@style/TextScore_style"
             android:id="@+id/ScoreText"
             app:layout_widthPercent="96%"
             app:layout_marginLeftPercent="2%"
             app:layout_heightPercent="15%"
             app:layout_marginTopPercent="17%"
             android:text="Your score is:"
-            android:textSize="24sp"
-            android:textColor="#000000"/>
+            android:textSize="24sp"/>
 
         <TextView
             android:autoSizeTextType="uniform"
+            style="@style/TextScore_style"
             android:id="@+id/ScoreValueText"
             app:layout_widthPercent="96%"
             app:layout_marginLeftPercent="2%"
             app:layout_heightPercent="15%"
             app:layout_marginTopPercent="32%"
             android:text="123456789"
-            android:textSize="26sp"
-            android:textColor="#000000"
-            />
+            android:textSize="26sp" />
 
         <Button
             android:id="@+id/NewGameButton_EndGame"
+            style="@style/Button_Style"
             app:layout_widthPercent="96%"
             app:layout_marginLeftPercent="2%"
             app:layout_heightPercent="15%"
             app:layout_marginTopPercent="49%"
-            android:text="New Game"
-            android:background="#a88d61"
-            android:textColor="#ffffff"/>
+            android:text="New Game" />
 
         <Button
             android:id="@+id/MainMenuButton_EndGame"
+            style="@style/Button_Style"
             app:layout_widthPercent="96%"
             app:layout_marginLeftPercent="2%"
             app:layout_heightPercent="15%"
             app:layout_marginTopPercent="66%"
-            android:text="Main menu"
-            android:background="#a88d61"
-            android:textColor="#ffffff"/>
+            android:text="Main menu"/>
 
         <Button
             android:id="@+id/EndButton_EndGame"
+            style="@style/Button_Style"
             app:layout_widthPercent="96%"
             app:layout_marginLeftPercent="2%"
             app:layout_heightPercent="15%"
             app:layout_marginTopPercent="83%"
-            android:text="End"
-            android:background="#a88d61"
-            android:textColor="#ffffff"/>
+            android:text="End" />
     </android.support.percent.PercentRelativeLayout>
 </android.support.constraint.ConstraintLayout>

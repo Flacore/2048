@@ -22,6 +22,19 @@ public class Settings extends AppCompatActivity implements Serializable {
    private Button SVK,ENG,Back;
    private TextView LANG,GAME;
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("Data", dt);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        dt =(Data) savedInstanceState.getSerializable("Data");
+        Zmen();
+    }
+
     void Zmen(){
         switch (dt.getJazyk()){
             case 1:
@@ -59,6 +72,9 @@ public class Settings extends AppCompatActivity implements Serializable {
     private  View.OnClickListener backListener = new View.OnClickListener(){
         @Override
         public void onClick(View v){
+            Intent output = new Intent();
+            output.putExtra("Data", dt);
+            setResult(RESULT_OK, output);
             finish();
         }
     };

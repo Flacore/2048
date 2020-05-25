@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.percent.PercentRelativeLayout
+    style="@style/BackgroudBlank"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.percent.PercentRelativeLayout
+        style="@style/BackgroudBlank"
         app:layout_widthPercent="96%"
         app:layout_heightPercent="96%"
         app:layout_marginTopPercent="2%"
@@ -26,13 +28,13 @@
 
             <TextView
                 android:id="@+id/GameSizeText"
+                style="@style/HighLighted_Text"
                 android:autoSizeTextType="uniform"
                 android:layout_width="match_parent"
                 app:layout_heightPercent="12.5%"
                 android:text="GAME SIZE:"
                 android:textSize="24sp"
-                app:layout_marginTopPercent="0%"
-                android:textColor="#a88d61"/>
+                app:layout_marginTopPercent="0%"/>
 
             <RadioGroup
                 android:id="@+id/SizeGroup"
@@ -66,43 +68,40 @@
 
             <TextView
                 android:id="@+id/LanguageText"
+                style="@style/HighLighted_Text"
                 android:autoSizeTextType="uniform"
                 android:layout_width="match_parent"
                 app:layout_heightPercent="12.5%"
                 app:layout_marginTopPercent="56.2%"
                 android:text="LANGUAGE:"
-                android:textSize="24sp"
-                android:textColor="#a88d61"/>
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/SlovakButton"
+                style="@style/Button_Style"
                 android:layout_width="match_parent"
                 app:layout_heightPercent="12.5%"
                 app:layout_marginTopPercent="71.8%"
-                android:background="#a88d61"
-                android:text="Slovak"
-                android:textColor="#ffffff"/>
+                android:text="Slovak" />
 
             <Button
                 android:id="@+id/EnglishButton"
+                style="@style/Button_Style"
                 android:layout_width="match_parent"
                 app:layout_heightPercent="12.5%"
                 app:layout_marginTopPercent="85%"
-                android:background="#a88d61"
-                android:text="English"
-                android:textColor="#ffffff" />
+                android:text="English" />
 
         </android.support.percent.PercentRelativeLayout>
 
         <Button
             android:id="@+id/BackButton_Settings"
+            style="@style/Button_Style"
             app:layout_widthPercent="20%"
             app:layout_heightPercent="8%"
             app:layout_marginLeftPercent="80%"
             app:layout_marginTopPercent="0%"
-            android:background="#a88d61"
             android:text="BACK"
-            android:textColor="#ffffff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </android.support.percent.PercentRelativeLayout>

@@ -9,11 +9,13 @@
     android:background="#f7f1e3">
 
     <android.support.percent.PercentRelativeLayout
-       app:layout_widthPercent="50%"
+        style="@style/BackgroudBlank"
+        app:layout_widthPercent="50%"
         app:layout_heightPercent="100%"
         >
 
         <android.support.percent.PercentRelativeLayout
+            style="@style/BackgroudBlank"
             android:id="@+id/Vrch"
             app:layout_widthPercent="100%"
             app:layout_heightPercent="46%"
@@ -22,6 +24,7 @@
 
             <TextView
                 android:id="@+id/Name"
+                style="@style/Logo"
                 app:layout_widthPercent="50%"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -29,6 +32,7 @@
                 app:autoSizeTextType="uniform" />
 
             <android.support.percent.PercentRelativeLayout
+                style="@style/BackgroudBlank"
                 android:id="@+id/statistick"
                 app:layout_widthPercent="50%"
                 app:layout_marginLeftPercent="50%"
@@ -54,7 +58,7 @@
                         app:autoSizeTextType="uniform" />
 
                     <TextView
-                        android:id="@+id/valueBest"
+                        android:id="@+id/valueBestScore"
                         android:layout_width="match_parent"
                         app:layout_heightPercent="50%"
                         app:layout_marginTopPercent="50%"
@@ -97,43 +101,49 @@
 
         <Button
             android:id="@+id/bGame_NEW"
+            style="@style/Button_Style"
             app:layout_widthPercent="100%"
             app:layout_heightPercent="20%"
             app:layout_marginTopPercent="54%"
-            android:background="#a88d61"
             android:text="NEW GAME"
-            android:textColor="#ffffff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Vrch" />
 
         <Button
             android:id="@+id/bGame_END"
+            style="@style/Button_Style"
             app:layout_widthPercent="100%"
             app:layout_heightPercent="20%"
-            app:layout_marginTopPercent="80%"
-            android:background="#a88d61"
+            app:layout_marginTopPercent="77%"
             android:text="END GAme"
-            android:textColor="#ffffff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Vrch" />
 
     </android.support.percent.PercentRelativeLayout>
 
     <android.support.percent.PercentRelativeLayout
-        android:id="@+id/gameField"
+        style="@style/BackgroudFilled"
         app:layout_widthPercent="50%"
         app:layout_heightPercent="100%"
         app:layout_marginLeftPercent="50%"
-        android:background="#f51b00"
         >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+        <android.support.percent.PercentRelativeLayout
+            app:layout_widthPercent="94%"
+            app:layout_heightPercent="94%"
+            app:layout_marginTopPercent="3%"
+            app:layout_marginLeftPercent="3%"
             >
-        //Sem pridavat riadky
-        //@Predstavuje herne pole
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/gameField"
+                style="@style/BackgroudFilled"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                //Sem pridavat riadky
+                //@Predstavuje herne pole
+            </LinearLayout>
+        </android.support.percent.PercentRelativeLayout>
     </android.support.percent.PercentRelativeLayout>
 
 </android.support.percent.PercentRelativeLayout>

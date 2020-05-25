@@ -7,6 +7,7 @@
 
 
     <android.support.percent.PercentRelativeLayout
+        style="@style/BackgroudBlank"
         android:id="@+id/linearLayout"
         app:layout_widthPercent="100%"
         app:layout_heightPercent="50%"
@@ -18,43 +19,39 @@
 
         <Button
             android:id="@+id/newGame"
+            style="@style/Button_Style"
             app:layout_widthPercent="80%"
             app:layout_heightPercent="20%"
             android:layout_height="wrap_content"
             app:layout_marginTopPercent="0%"
             app:layout_marginLeftPercent="10%"
-            android:background="#a88d61"
-            android:text="NEW GAME"
-            android:textColor="#ffffff" />
+            android:text="NEW GAME"/>
 
         <Button
             android:id="@+id/loadGame"
+            style="@style/Button_Style"
             app:layout_widthPercent="80%"
             app:layout_heightPercent="20%"
             android:layout_height="wrap_content"
             app:layout_marginTopPercent="25%"
             app:layout_marginLeftPercent="10%"
-            android:background="#a88d61"
-            android:text="LOAD GAME"
-            android:textColor="#ffffff" />
+            android:text="LOAD GAME" />
 
         <Button
             android:id="@+id/settings"
+            style="@style/Button_Style"
             app:layout_widthPercent="80%"
             app:layout_heightPercent="20%"
             android:layout_height="wrap_content"
             app:layout_marginTopPercent="50%"
             app:layout_marginLeftPercent="10%"
-            android:background="#a88d61"
-            android:text="SETTINGS"
-            android:textColor="#ffffff" />
+            android:text="SETTINGS" />
 
         <Button
             android:id="@+id/close"
+            style="@style/Button_Style"
             android:layout_height="wrap_content"
-            android:background="#a88d61"
             android:text="Close"
-            android:textColor="#ffffff"
             app:layout_marginTopPercent="75%"
             app:layout_marginLeftPercent="10%"
             app:layout_heightPercent="20%"
@@ -63,18 +60,16 @@
 
     <TextView
         android:id="@+id/gameName"
+        style="@style/Logo"
         app:layout_widthPercent="100%"
         app:layout_heightPercent="50%"
         app:layout_marginBottomPercent="50%"
         android:lineSpacingExtra="8sp"
         android:text="2048"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="#f9c157"
         android:gravity="center"
         android:layout_gravity='center_vertical'
         android:autoSizeTextType="uniform"
-        android:textStyle="italic"
-        android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
