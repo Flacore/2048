@@ -89,14 +89,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void settingActivity(){
         Intent intent = new Intent(MainActivity.this, Settings.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("dtData", dt);
-        intent.putExtras(bundle);
+        intent.putExtra("Data", dt);
         startActivity(intent);
     }
 
     private void openGame(int Druh){
         Intent intent =new Intent(MainActivity.this,Game.class);
+        intent.putExtra("Data", dt);
         startActivity(intent);
     }
     private void openGame(){

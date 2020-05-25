@@ -54,7 +54,7 @@
                         app:autoSizeTextType="uniform" />
 
                     <TextView
-                        android:id="@+id/valueBest"
+                        android:id="@+id/valueBestScore"
                         android:layout_width="match_parent"
                         app:layout_heightPercent="50%"
                         app:layout_marginTopPercent="50%"

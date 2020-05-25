@@ -13,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import org.w3c.dom.Text;
 
-public class Settings extends AppCompatActivity {
+import java.io.Serializable;
+
+public class Settings extends AppCompatActivity implements Serializable {
    private Data dt;
    private RadioGroup rGroup;
    private RadioButton rButton;
@@ -27,14 +29,14 @@ public class Settings extends AppCompatActivity {
                 ENG.setText("English");
                 Back.setText("Back");
                 LANG.setText("Language");
-                GAME.setText("game size");
+                GAME.setText("Game Size");
                 break;
             case 2:
                 SVK.setText("Slovensky");
                 ENG.setText("Anglicky");
                 Back.setText("Späť");
                 LANG.setText("Jazyk");
-                GAME.setText("Velkosť hry");
+                GAME.setText("Velkosť Hry");
                 break;
         }
     }
@@ -54,7 +56,6 @@ public class Settings extends AppCompatActivity {
             Zmen();
         }};
 
-    //TODO: navrat do hlavneho menu
     private  View.OnClickListener backListener = new View.OnClickListener(){
         @Override
         public void onClick(View v){
@@ -72,6 +73,9 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
+        Intent i = getIntent();
+        dt = (Data) i.getSerializableExtra("Data");
+
         SVK = (Button) findViewById(R.id.SlovakButton) ;
         ENG = (Button) findViewById(R.id.EnglishButton) ;
         Back = (Button) findViewById(R.id.BackButton_Settings) ;
@@ -80,9 +84,6 @@ public class Settings extends AppCompatActivity {
         GAME = (TextView) findViewById(R.id.GameSizeText);
 
         Intent intent = getIntent();
-
-        Bundle bundle = intent.getExtras();
-        dt = (Data) bundle.getSerializable("dtData");
 
         Zmen();
 

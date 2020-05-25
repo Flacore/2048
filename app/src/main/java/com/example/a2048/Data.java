@@ -6,7 +6,7 @@ public class Data implements Serializable {
     private int jazyk = 2;
     private boolean existujeHra=false;
     private int[][] Hra;
-    private int hraSize=0;
+    private int hraSize=2;
     private int Score = 0;
     private int high2x2=0;
     private int high3x3=0;
@@ -64,7 +64,9 @@ public class Data implements Serializable {
         Hra = new int [gameSize][gameSize];
     }
     void setPrvokPola(int Hodnota,int x,int y){
-        this.Hra[x][y]=Hodnota;
+
+        if(getType()>x && getType()>y)
+            this.Hra[x][y]=Hodnota;
     }
 
     int getHraProk(int x,int y){

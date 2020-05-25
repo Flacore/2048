@@ -45,7 +45,7 @@ public class EndGame extends AppCompatActivity {
                 text2="Tvôj rekord je: ";
                 break;
         }
-        tScoreValue.setText(dt.getScore());
+        tScoreValue.setText(String.valueOf(dt.getScore()));
         int tmp = 0;
         switch(dt.getType()){
             case 2:
@@ -59,22 +59,25 @@ public class EndGame extends AppCompatActivity {
         }
         if(tmp < dt.getScore()){
             Toast.makeText(EndGame.this,text1,Toast.LENGTH_SHORT).show();
+            tHighScore.setVisibility(View.VISIBLE);
         }else{
-            Toast.makeText(EndGame.this,text2+tmp,Toast.LENGTH_SHORT).show();
+            if(!(tmp == dt.getScore()))
+                Toast.makeText(EndGame.this,text2+tmp,Toast.LENGTH_SHORT).show();
+            tHighScore.setVisibility(View.INVISIBLE);
         }
     }
 
     private View.OnClickListener bNewGameOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            sb.saveSettings();
+            //TODO: sb.saveSettings();
             finish();
         }
     };
     private View.OnClickListener bMainMenuOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            sb.saveSettings();
+            //TODO: sb.saveSettings();
             Intent intent  = new Intent(EndGame.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -83,7 +86,7 @@ public class EndGame extends AppCompatActivity {
     private View.OnClickListener bEndGameOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            sb.saveSettings();
+            //TODO: sb.saveSettings();
             finishAffinity();
             System.exit(0);
         }
@@ -94,7 +97,8 @@ public class EndGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.endgame_activity);
 
-        //Intent getIntent_ = getIntent();
+        Intent i = getIntent();
+        dt = (Data) i.getSerializableExtra("Data");
 
         bNewGame = (Button) findViewById(R.id.NewGameButton_EndGame);
         bMainMenu = (Button) findViewById(R.id.MainMenuButton_EndGame);
@@ -108,7 +112,7 @@ public class EndGame extends AppCompatActivity {
         tScoreValue = (TextView) findViewById(R.id.ScoreValueText);
         tScore = (TextView) findViewById(R.id.ScoreText);
 
-        sb.deleteGame();
+        //TODO: sb.deleteGame();
         Zmen();
 
     }
