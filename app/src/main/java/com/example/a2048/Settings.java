@@ -15,6 +15,10 @@ import org.w3c.dom.Text;
 
 import java.io.Serializable;
 
+/**
+ * Daná trieda slúži na nastavenie parametrov aplikácie.
+ * @autor Michal Molitoris
+ */
 public class Settings extends AppCompatActivity implements Serializable {
    private Data dt;
    private RadioGroup rGroup;
@@ -22,12 +26,21 @@ public class Settings extends AppCompatActivity implements Serializable {
    private Button SVK,ENG,Back;
    private TextView LANG,GAME;
 
+    /**
+     * Inicializovanie dát pre novú aktivitu ktorá sa vytvorí
+     * po otočený displeja. Slúži na uchovanie pôvodných nastavený aplikácie.
+     * @param outState
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("Data", dt);
     }
 
+    /**
+     * Získanie uchovaných dát po zmene orientácie displeja.
+     * @param savedInstanceState
+     */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -35,6 +48,10 @@ public class Settings extends AppCompatActivity implements Serializable {
         Zmen();
     }
 
+    /**
+     * Funkcia načíta z triedy dáta nastavený (nami zvolený jazyk) a
+     * nastavý prvky aplikácie aby sa v tomto jazyku zobrazovali.
+     */
     void Zmen(){
         switch (dt.getJazyk()){
             case 1:
@@ -54,7 +71,10 @@ public class Settings extends AppCompatActivity implements Serializable {
         }
     }
 
-
+    /**
+     * Po stlačný tlačidla prislúchajucemu slovenskemu jazyku sa zmení jazyk v
+     * aplikácii a zároveň sa hodnota pre daný jazyk uchová v triede Data.
+     */
     private View.OnClickListener svkOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -62,6 +82,10 @@ public class Settings extends AppCompatActivity implements Serializable {
             Zmen();
         }};
 
+     /**
+     * Po stlačný tlačidla prislúchajucemu Anglickému jazyku sa zmení jazyk v
+     * aplikácii a zároveň sa hodnota pre daný jazyk uchová v triede Data.
+     */
     private View.OnClickListener engOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -69,6 +93,10 @@ public class Settings extends AppCompatActivity implements Serializable {
             Zmen();
         }};
 
+    /**
+     * Pri stlačný tlačidla späť sa nastavia dáta ktore sa vrátia do rodičovskej aktivity
+     * a zároveň sa potom (táto aktivita) zruší.
+     */
     private  View.OnClickListener backListener = new View.OnClickListener(){
         @Override
         public void onClick(View v){
@@ -79,11 +107,21 @@ public class Settings extends AppCompatActivity implements Serializable {
         }
     };
 
+    /**
+     *Pomocná funkcia použitá z dôvodu deaktivácie spetného tlačidla (Hardware) na mobilnom zariadení.
+     * Táto funkcia nemá žiadny vstupný parameter a zároveň nemá definovanú ani funkcionalitu a teda
+     * pri jej vykonávaný ako keby sa dané volanie ignorovalo.
+     * */
     @Override
     public void onBackPressed() { }
 
 
-
+    /**
+     *Funkcia onCreate nám zadefinuje čo sa má všetko vykonať pri spustený danej triedy a ku
+     * nej prislúchajúcej Aktivite.
+     * @param savedInstanceState
+     *
+     **/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

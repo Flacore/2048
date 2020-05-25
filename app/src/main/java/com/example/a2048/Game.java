@@ -30,29 +30,47 @@ import java.util.Random;
 import android.hardware.SensorEventListener;
 import java.*;
 
+/**
+ * Najväčšia trieda v aplikácii ktorá sa stará o zobrazovanie grafiky hry a zároveň
+ * o celú jej výpočtovú logiku.
+ * @Autor Michal Molitoris
+ */
 public class Game extends AppCompatActivity implements GestureDetector.OnGestureListener, SensorEventListener {
 
     private static final int SETTINGS_REQUEST_CODE=0;
 
     private NotificationCompat.Builder nJoker, nHScore;
 
-    private int zolik = 0;
+    private int zolik = 0,NotifHS = 0;
 
     private float acelVal, acelLast, shake;
     private SensorManager sm;
 
     private Button newGame,endGame;
     private Data dt;
-    private Subor sb;
     private TextView score,best,cScore,cBest;
     private TextView[][] gameFieldTest;
 
+    private Activity activity;
+    static final int MIN_DISTANCE = 100;
+    private float downX, downY, upX, upY;
+    private GestureDetector gestureDetector;
+
+    /**
+     * Inicializovanie dát pre novú aktivitu ktorá sa vytvorí
+     * po otočený displeja. Slúži na uchovanie pôvodných nastavený aplikácie.
+     * @param outState
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("Data", dt);
     }
 
+    /**
+     * Získanie uchovaných dát po zmene orientácie displeja.
+     * @param savedInstanceState
+     */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -61,11 +79,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         Zmen();
     }
 
-    private Activity activity;
-    static final int MIN_DISTANCE = 100;
-    private float downX, downY, upX, upY;
-    private GestureDetector gestureDetector;
-
+    /**
+     *Funkcia ako už jej názov napovedá sa stará o náhodne vygenerovanie prvku ktorý
+     * vloží do hernej matice.
+     */
     public void pridajPrvok(){
         boolean paPravda=true;
         do{
@@ -78,7 +95,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }while(paPravda);
     }
 
-    //Test na koniec hry
+    /**
+     *Funkcia testuje či je možné pokračovať v hre alebo či má hru ukončíť.
+     * @return Vracia Boolean hodnotu.
+     */
     public boolean testKoniecHry(){
         for (int i = 0; i < dt.getType(); i++) {
             for (int j = 0; j < dt.getType(); j++) {
@@ -90,7 +110,11 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         return true;
     }
 
-    //Skontrolavanie ci moze vykonat pohyb v danom smere
+    /**
+     * Pomocná funkcia na testovanie či je možné vykonať pohyb do nami zvoleného smeru.
+     * @param paVolba Smer pohybu.
+     * @return MoŽnosť vykonania pohybu do daného smeru
+     */
     public boolean swictcher(int paVolba){
         boolean paMoze=false;
         switch(paVolba){
@@ -110,7 +134,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         return paMoze;
     }
 
-
+    /**
+     * Funkcia testuje či možné vykonať pohyb nahor.
+     * @return Možnosť vykonať pohyb.
+     */
     private boolean smerHoreTest(){
         boolean moznPohyb = false;
         for (int i = 0; i < dt.getType()-1; i++) {
@@ -123,6 +150,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         return moznPohyb;
     }
 
+    /**
+     * Funkcia testuje či možné vykonať pohyb nadol.
+     * @return Možnosť vykonať pohyb.
+     */
     private boolean smerDoleTest(){
         boolean moznPohyb = false;
         for (int i = dt.getType()-1; i > 0; i--) {
@@ -135,6 +166,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         return moznPohyb;
     }
 
+    /**
+     * Funkcia testuje či možné vykonať pohyb do prava.
+     * @return Možnosť vykonať pohyb.
+     */
     private boolean smerPravaTest(){
         boolean moznPohyb = false;
         for (int i = 0; i < dt.getType(); i++) {
@@ -147,6 +182,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         return moznPohyb;
     }
 
+    /**
+     * Funkcia testuje či možné vykonať pohyb do lava.
+     * @return Možnosť vykonať pohyb.
+     */
     private boolean smerLavaTest(){
         boolean moznPohyb = false;
         for (int i = 0; i < dt.getType(); i++) {
@@ -159,7 +198,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         return moznPohyb;
     }
 
-    //Uprava smery
+    /**
+     *Funkcia vykonáva nami zvoleny pohyb.
+     * @param paVolba Volba smeru pohybu.
+     */
     public void doSmer(int paVolba){
         switch(paVolba){
             case 8:
@@ -177,6 +219,9 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
     }
 
+    /**
+     * Funkcia poposúva prvky pola v smere nahor.
+     */
     private void smerHore(){
         for(int opakuj = 0;opakuj<dt.getType()-1;opakuj++){
             for (int i = 0; i < dt.getType()-1; i++) {
@@ -193,6 +238,9 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
     }
 
+    /**
+     * Funkcia poposúva prvky pola v smere nadol.
+     */
     private void smerDole(){
         for(int opakuj = 0;opakuj<dt.getType()-1;opakuj++){
             for (int i = dt.getType()-1; i > 0; i--) {
@@ -209,6 +257,9 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
     }
 
+    /**
+     * Funkcia poposúva prvky pola v smere do prava.
+     */
     private void smerPrava(){
         for(int opakuj = 0;opakuj<dt.getType()-1;opakuj++){
             for (int i = 0; i < dt.getType(); i++) {
@@ -225,6 +276,9 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
     }
 
+    /**
+     * Funkcia poposúva prvky pola v smere do lava.
+     */
     private void smerLava(){
         for(int opakuj = 0;opakuj<dt.getType()-1;opakuj++){
             for (int i = 0; i < dt.getType(); i++) {
@@ -241,7 +295,13 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
     }
 
-    //Ziskanie skore
+    /**
+     * Funkcia spočíta prvky a pripočíta ich hodnotu k aktuálnemu skóre. Ak
+     * zistí že aktuálne skóre je väčšie ako doteraz najväčšie nahrané pre daný typ hry
+     * informuje nás o tom prostredníctvom notifikácie.
+     * @param paA Prvok 1.
+     * @param paB Prvok 2.
+     */
     private void upravScore(int paA, int paB){
         if(paA != 0 && paB != 0)
             upravScore(paA+paB);
@@ -257,18 +317,28 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
                 highScore = dt.getHigh4x4();
 
         }
-        if(dt.getScore()> highScore){
+        if(dt.getScore()> highScore && NotifHS ==0){
+            NotifHS++;
             NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
             manager.notify(100,nHScore.build());
         }
     }
 
+    /**
+     *Zapíše hodnotu skóre.
+     * @param paZvacsiO O kolko sa má hodnota zväčšiť.
+     */
     public void upravScore(int paZvacsiO){
         int tmp = dt.getScore();
         tmp+=paZvacsiO;
         dt.setScore(tmp);
     }
 
+    /**
+     *Počiatočné nastavenie hry. Funkcia vytvorí dynamicky riadky pola, do ktorých rovnakým
+     * spôsobom vytvorí stĺpce do ktorých sa budu vpisovať hodnoty z hernej matice.
+     * Zároveň ak neexistuje uložená hra tak vytvorí novú a naplní ju prvkami.
+     */
     public void setGame(){
         int size_ = dt.getType();
 
@@ -299,6 +369,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         upravZobrazovaciuPlochu();
     }
 
+    /**
+     *Vytváranie novej matice.
+     * Naplnenie nulami a následne pridá dve prvky ktorích pozícia je náhodne generovaná.
+     */
     public void vytvorNovu(){
         dt.vytvorPoleHry();
         int size_ = dt.getType();
@@ -313,6 +387,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         dt.setExituje(true);
     }
 
+    /**
+     * Funkcia služí na vykreslenie  aktuálnej hernej matice a všetkých parametrov
+     * s tým súvysiacimi.
+     */
     public void upravZobrazovaciuPlochu(){
         int size_ = dt.getType();
         for(int i = 0 ; i<size_ ; i++){
@@ -333,17 +411,25 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
     }
 
+    /**
+     *Funkcia zistí či môže do daného smeru vykonať pohyb a ak áno
+     * potom vykoná všetky potrebné kroky potrebné pre úpravu matice.
+     * @param tmp Predstavuje smer pohybu úpravi matice.
+     */
     public void vykonaj(int tmp){
         if(swictcher(tmp)) {
             doSmer(tmp);
             this.upravZobrazovaciuPlochu();
-            //TODO: sb.saveGame();
+            pridajPrvok();
             if (testKoniecHry())
                 ukonc();
-            pridajPrvok();
         }
     }
 
+    /**
+     * Funkcia načíta z triedy dáta nastavený (nami zvolený jazyk) a
+     * nastavý prvky aplikácie aby sa v tomto jazyku zobrazovali.
+     */
     void Zmen(){
         switch (dt.getJazyk()){
             case 1:
@@ -361,6 +447,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
     }
 
+    /**
+     * Funkcia sa spustí po klknutý na tlačidlo novej hry a vykoná reset hracej plochy
+     * a doteraz nahranej hodnoty skóre.
+     */
     private View.OnClickListener newGameListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -369,12 +459,24 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
     };
 
+    /**
+     *Funkcia predčasne ukončý vykonávanie hry ako keby už nebolo možné
+     * vykonať ďalší pohyb.
+     */
     public void ukonc(){
             Intent intent =new Intent(Game.this,EndGame.class);
             intent.putExtra("Data", dt);
             startActivityForResult(intent,SETTINGS_REQUEST_CODE);
     }
 
+    /**
+     *Funkcia ktorej účelom je načítanie dát vratených z potomka, ďalšej aktivity.
+     * V tomto prípade sa jedná o aktivitu Koniec hry kde v prípade že si zvolíme začať novú
+     * hru tak sa vrátime naspäť sem kde vytvoríme novú maticu s ktorou hráme odznova.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SETTINGS_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
@@ -384,6 +486,9 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
     }
 
+    /**
+     *Ak stlačíme tlačidlo ukončiť hru vykoná sa funkcia ukončiť hru.
+     */
     private View.OnClickListener endGameListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -391,10 +496,20 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
     };
 
+    /**
+     *Pomocná funkcia použitá z dôvodu deaktivácie spetného tlačidla (Hardware) na mobilnom zariadení.
+     * Táto funkcia nemá žiadny vstupný parameter a zároveň nemá definovanú ani funkcionalitu a teda
+     * pri jej vykonávaný ako keby sa dané volanie ignorovalo.
+     * */
     @Override
     public void onBackPressed() { }
 
-
+    /**
+     *Funkcia onCreate nám zadefinuje čo sa má všetko vykonať pri spustený danej triedy a ku
+     * nej prislúchajúcej Aktivite.
+     * @param savedInstanceState
+     *
+     **/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -431,37 +546,77 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         setGame();
     }
 
+    /**
+     *onTouchEvent ktorý nám slúži pri práci zo "Swipovaným".
+     * @param event
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
 
+    /**
+     *Funkcia implementovaná gesture detectorom.
+     * @param e
+     * @return
+     */
     @Override
     public boolean onDown(MotionEvent e) {
         return false;
     }
 
+    /**
+     *Funkcia implementovaná gesture detectorom.
+     * @param e
+     */
     @Override
     public void onShowPress(MotionEvent e) {
 
     }
 
+    /**
+     *Funkcia implementovaná gesture detectorom.
+     * @param e
+     * @return
+     */
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         return false;
     }
 
+    /**
+     *Funkcia implementovaná gesture detectorom.
+     * @param e1
+     * @param e2
+     * @param distanceX
+     * @param distanceY
+     * @return
+     */
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         return false;
     }
 
+    /**
+     *Funkcia implementovaná gesture detectorom.
+     * @param e
+     */
     @Override
     public void onLongPress(MotionEvent e) {
 
     }
 
+    /**
+     *onFiling metóda ktorá nam získava pohyb (smer) do ktorého potiahneme prst po
+     * display a následné vykoná čo je z daným smerom treba vykonať.
+     * @param downEvent
+     * @param moveEvent
+     * @param velocityX
+     * @param velocityY
+     * @return
+     */
     @Override
     public boolean onFling(MotionEvent downEvent, MotionEvent moveEvent, float velocityX, float velocityY) {
         boolean result =false;
@@ -492,6 +647,12 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         return result;
     }
 
+    /**
+     *Funkcia ktorá nám reaguje na pohyb mobilu a v prípade že zaznamená zatrasenie
+     * tak maximálne raz počas hry nám vyresetuje hru z uchovaním doteraz nahraného skóre.
+     * Jedná sa o tzv. žolíka.
+     * @param event
+     */
     @Override
     public void onSensorChanged(SensorEvent event) {
         float x = event.values[0];
@@ -518,15 +679,23 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         }
     }
 
+    /**
+     *Funkcie implementovaná senzorom.
+     * @param sensor
+     * @param accuracy
+     */
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 
+    /**
+     *Nastavenie parametrov notifikácie (Ako bude notifikácia vyzerať).
+     */
     protected void notificationJoker(){
         String text1 = "",text2="";
         switch (dt.getJazyk()){
-            case 2:
+            case 1:
                 text1="Warning!";
                 text2="You don't have joker any more.";
                 break;
@@ -541,6 +710,9 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
     }
 
+    /**
+     *Nastavenie parametrov notifikácie (Ako bude notifikácia vyzerať).
+     */
     protected void notificationHighScore(){
         String text1 = "",text2="";
         switch (dt.getJazyk()){
@@ -559,6 +731,9 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
     }
 
+    /**
+     *Nastavenie notifikácie.
+     */
     private void createNotificationChannelHS() {
             CharSequence name ="HighScoreChanel";
             String description = "Chanel for High Score notification";
@@ -569,6 +744,9 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
             notificationManager.createNotificationChannel(channel);
     }
 
+    /**
+     *Nastavenie notifikácie.
+     */
     private void createNotificationChannelJ() {
             CharSequence name ="JokerChanel";
             String description = "Chanel for Joker notification";

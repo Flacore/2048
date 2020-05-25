@@ -17,21 +17,33 @@ import android.app.NotificationManager;
 import android.support.v7.app.AppCompatActivity;
 
 
+/**
+ * Konečná trieda v dedičnosti aktivít v ktorej sa rozhodujeme ako ďalej pokračovať.
+ * @autor Michal Molitoris
+ */
 public class EndGame extends AppCompatActivity {
 
     private NotificationCompat.Builder nHScoreWJ;
 
     private Data dt;
-    private Subor sb;
     private Button bNewGame,bMainMenu,bEndGame;
     private TextView tHighScore,tScoreValue,tScore;
 
+    /**
+     * Inicializovanie dát pre novú aktivitu ktorá sa vytvorí
+     * po otočený displeja. Slúži na uchovanie pôvodných nastavený aplikácie.
+     * @param outState
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("Data", dt);
     }
 
+    /**
+     * Získanie uchovaných dát po zmene orientácie displeja.
+     * @param savedInstanceState
+     */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -39,10 +51,20 @@ public class EndGame extends AppCompatActivity {
         Zmen();
     }
 
-    //Zrusenie navratu
+
+    /**
+     *Pomocná funkcia použitá z dôvodu deaktivácie spetného tlačidla (Hardware) na mobilnom zariadení.
+     * Táto funkcia nemá žiadny vstupný parameter a zároveň nemá definovanú ani funkcionalitu a teda
+     * pri jej vykonávaný ako keby sa dané volanie ignorovalo.
+     * */
     @Override
     public void onBackPressed() { }
 
+    /**
+     *Zmení jazyk danej aktivity a zároveň nastavý všetky polia ako sú
+     * skóre a ukazovatel či sme prekročili doposial najväčšie skóre a ak
+     * áno zagratuluje nám formou achivementu (Notifikácia).
+     */
     void Zmen(){
         String text1 ="",text2="";
         switch (dt.getJazyk()){
@@ -101,35 +123,52 @@ public class EndGame extends AppCompatActivity {
         }
     }
 
+    /**
+     *Po stlačený tlačidla nová hra sa vrátime o jednu aktivitu naspäť
+     * a prestavíme jej parametre aby sa tvárila ako keby začneme novú hru a
+     * tým pádom aj novú aktivitu.
+     */
     private View.OnClickListener bNewGameOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //TODO: sb.saveSettings();
             Intent output = new Intent();
             output.putExtra("Data", dt);
             setResult(RESULT_OK, output);
             finish();
         }
     };
+
+    /**
+     *Zruší všetky aktivity a inicializuje novú (Hlavné Menu) čo vo
+     * finále vyzerá ako keby sme sa vrátili na začiatok a aj sa tak potom chová.
+     */
     private View.OnClickListener bMainMenuOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //TODO: sb.saveSettings();
             Intent intent  = new Intent(EndGame.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("Data", dt);
             startActivity(intent);
         }
     };
+
+    /**
+     *Zruší všetky doposial vytvorené aktivity a  ukončí beh aplikácie.
+     */
     private View.OnClickListener bEndGameOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //TODO: sb.saveSettings();
             finishAffinity();
             System.exit(0);
         }
     };
 
+    /**
+     *Funkcia onCreate nám zadefinuje čo sa má všetko vykonať pri spustený danej triedy a ku
+     * nej prislúchajúcej Aktivite.
+     * @param savedInstanceState
+     *
+     **/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,10 +194,12 @@ public class EndGame extends AppCompatActivity {
         createNotificationChannelHS();
         notificationHighScore();
 
-        //TODO: sb.deleteGame();
         Zmen();
     }
 
+    /**
+     *Nastavenie parametrov notifikácie (Ako bude notifikácia vyzerať).
+     */
     protected void notificationHighScore(){
         String text1 = "",text2="";
         switch (dt.getJazyk()){
@@ -177,6 +218,9 @@ public class EndGame extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
     }
 
+    /**
+     *Nastavenie notifikácie.
+     */
     private void createNotificationChannelHS() {
         CharSequence name ="HS_without_Jouker";
         String description = "Chanel for High Score without using Joker notification";
