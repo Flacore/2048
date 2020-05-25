@@ -1,5 +1,7 @@
 package com.example.a2048;
 
+//This here is for new commit
+
 import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
