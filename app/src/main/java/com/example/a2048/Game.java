@@ -321,6 +321,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
             NotifHS++;
             NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
             manager.notify(100,nHScore.build());
+            //Odmena
+            int tmp = dt.getScore();
+            tmp+=2;
+            dt.setScore(tmp);
         }
     }
 
@@ -671,7 +675,10 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
                 NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
                 manager.notify(100,nJoker.build());
 
+                //Trest
                 int tmp = dt.getScore();
+                tmp-=8;
+
                 vytvorNovu();
                 dt.setScore(tmp);
                 upravZobrazovaciuPlochu();
