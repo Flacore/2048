@@ -2,12 +2,15 @@ package com.example.a2048;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.percent.PercentRelativeLayout;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
@@ -22,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.Color;
 import android.app.Service;
+import android.app.NotificationManager;
 import java.util.Random;
 import android.hardware.SensorEventListener;
 import java.*;
@@ -29,6 +33,8 @@ import java.*;
 public class Game extends AppCompatActivity implements GestureDetector.OnGestureListener, SensorEventListener {
 
     private static final int SETTINGS_REQUEST_CODE=0;
+
+    private NotificationCompat.Builder nJoker, nHScore;
 
     private int zolik = 0;
 
@@ -239,6 +245,22 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
     private void upravScore(int paA, int paB){
         if(paA != 0 && paB != 0)
             upravScore(paA+paB);
+        int highScore=0;
+        switch (dt.getType()){
+            case 2:
+                highScore = dt.getHigh2x2();
+                break;
+            case 3:
+                highScore = dt.getHigh3x3();
+                break;
+            default:
+                highScore = dt.getHigh4x4();
+
+        }
+        if(dt.getScore()> highScore){
+            NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.notify(100,nHScore.build());
+        }
     }
 
     public void upravScore(int paZvacsiO){
@@ -400,6 +422,11 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         acelLast = SensorManager.GRAVITY_EARTH;
         shake = 0.00f ;
 
+        createNotificationChannelHS();
+        createNotificationChannelJ();
+        notificationHighScore();
+        notificationJoker();
+
         Zmen();
         setGame();
     }
@@ -478,6 +505,11 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
         if(shake > 12){
             zolik++;
             if(zolik <=1) {
+                dt.setZolik(true);
+
+                NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                manager.notify(100,nJoker.build());
+
                 int tmp = dt.getScore();
                 vytvorNovu();
                 dt.setScore(tmp);
@@ -489,5 +521,61 @@ public class Game extends AppCompatActivity implements GestureDetector.OnGesture
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    protected void notificationJoker(){
+        String text1 = "",text2="";
+        switch (dt.getJazyk()){
+            case 2:
+                text1="Warning!";
+                text2="You don't have joker any more.";
+                break;
+            default:
+                text1="Pozor!";
+                text2="Vyčerpal si žolíka pre danú hru.";
+        }
+        nJoker = new NotificationCompat.Builder(this, "JokerID")
+                .setSmallIcon(R.drawable.ic_joker)
+                .setContentTitle(text1)
+                .setContentText(text2)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+    }
+
+    protected void notificationHighScore(){
+        String text1 = "",text2="";
+        switch (dt.getJazyk()){
+            case 2:
+                text1="Paráda...";
+                text2="Práve si prekonal svôj rekord!";
+                break;
+            default:
+                text1="That's awesome...";
+                text2="You break your record!";
+        }
+        nHScore = new NotificationCompat.Builder(this, "HighScoreID")
+                .setSmallIcon(R.drawable.ic_record)
+                .setContentTitle(text1)
+                .setContentText(text2)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+    }
+
+    private void createNotificationChannelHS() {
+            CharSequence name ="HighScoreChanel";
+            String description = "Chanel for High Score notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("HighScoreID", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+    }
+
+    private void createNotificationChannelJ() {
+            CharSequence name ="JokerChanel";
+            String description = "Chanel for Joker notification";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("JokerID", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
     }
 }

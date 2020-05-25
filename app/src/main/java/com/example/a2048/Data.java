@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Data implements Serializable {
     private int jazyk = 2;
+    private boolean pouzitieZolika = false;
     private boolean existujeHra=false;
     private int[][] Hra;
     private int hraSize=2;
@@ -58,6 +59,8 @@ public class Data implements Serializable {
         return this.hraSize;
     }
 
+    void setZolik(boolean tmp){ this.pouzitieZolika=tmp;}
+    boolean getZolik(){return pouzitieZolika;}
 
     void vytvorPoleHry(){
         int gameSize = hraSize;

@@ -1,7 +1,10 @@
 package com.example.a2048;
 
 import android.app.ActionBar;
+import android.app.NotificationChannel;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,11 +12,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.NotificationManager;
 
 import android.support.v7.app.AppCompatActivity;
 
 
 public class EndGame extends AppCompatActivity {
+
+    private NotificationCompat.Builder nHScoreWJ;
+
     private Data dt;
     private Subor sb;
     private Button bNewGame,bMainMenu,bEndGame;
@@ -83,6 +90,10 @@ public class EndGame extends AppCompatActivity {
                 default:
                     dt.setHigh4x4(dt.getScore());
             }
+            if(!dt.getZolik()) {
+                NotificationManager manager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                manager.notify(100,nHScoreWJ.build());
+            }
         }else{
             if(!(tmp == dt.getScore()))
                 Toast.makeText(EndGame.this,text2+tmp,Toast.LENGTH_SHORT).show();
@@ -141,8 +152,39 @@ public class EndGame extends AppCompatActivity {
         tScoreValue = (TextView) findViewById(R.id.ScoreValueText);
         tScore = (TextView) findViewById(R.id.ScoreText);
 
+        createNotificationChannelHS();
+        notificationHighScore();
+
         //TODO: sb.deleteGame();
         Zmen();
+    }
+
+    protected void notificationHighScore(){
+        String text1 = "",text2="";
+        switch (dt.getJazyk()){
+            case 2:
+                text1="Ty si král!";
+                text2="Práve si prekonal svôj rekord bez Žolíka!";
+                break;
+            default:
+                text1="You are the King!";
+                text2="You break your record without using Joker!";
+        }
+        nHScoreWJ = new NotificationCompat.Builder(this, "HighScoreID")
+                .setSmallIcon(R.drawable.ic_king)
+                .setContentTitle(text1)
+                .setContentText(text2)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+    }
+
+    private void createNotificationChannelHS() {
+        CharSequence name ="HS_without_Jouker";
+        String description = "Chanel for High Score without using Joker notification";
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel("HighScoreID", name, importance);
+        channel.setDescription(description);
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
     }
 
 }
